@@ -1,0 +1,152 @@
+day3
+
+1. 	
+
+例如：
+
+	i:=0
+	for{
+
+		println(i)
+		i++
+		if(i==5){
+			break
+		}
+		
+	   }
+输入结果为：
+0
+1
+2
+3
+4
+
+如果是一步一步执行的话 那么应该会输出5才对，是不是意味着go的执行顺序与c语言不一样
+
+已经解决：不论是什么for结构 都要先判断condition
+
+2.函数的值传递 参数传递.
+  等等
+*************作为值************
+
+3.	
+	package main
+	
+	import"fmt"
+
+	func main(){
+
+		var a,b int = 1 ,2
+
+		fmt.Printf("转换前a=%d,b=%d\n",a,b)
+
+		exchange(a,b)
+
+		fmt.Printf("转换后a=%d,b=%d\n",a,b)
+
+	}
+
+	func exchange(x,y int)int{
+
+		var temp int
+
+		temp=x
+		x=y
+		y=temp
+
+		return temp
+
+	}
+无法实现交换功能
+
+但是
+package main
+
+import "fmt"
+
+
+func main() {
+
+   var a int = 1
+   var b int = 2
+
+   fmt.Printf("交换前 a 的值为 : %d\n", a )
+   fmt.Printf("交换前 b 的值为 : %d\n", b )
+
+   
+   swap(a, b)
+
+   fmt.Printf("交换后 a 的值 : %d\n", a )
+   fmt.Printf("交换后 b 的值 : %d\n", b )
+}
+
+
+func swap(x, y int) int {
+    
+   var temp int
+
+   temp = x 
+   x = y    
+   y = temp 
+
+   return temp
+}
+却可以
+
+4.在$gopath/src/main 下建立两个go文件 day2.go day3.go
+	在go build的时候很正常 但是在go run的时候
+     出现了以下提示
+		kenan@kenan-OMEN-by-HP-Laptop:~/program/src/main$ go run day3.go
+		# command-line-arguments
+		runtime.main: call to external function main.main
+		runtime.main: main.main: not defined
+		runtime.main: undefined: main.main
+
+
+	方法：建立两个文件夹
+
+5.方法：
+Go 语言中同时有函数和方法。一个方法就是一个包含了接受者的函数，接受者可以是命名类型或者结构体类型的一个值或者是一个指针。所有给定类型的方法属于该类型的方法集。语法格式如下：
+
+func (variable_name variable_data_type) function_name() [return_type]{
+   /* 函数体*/
+}
+
+type stu struct{
+	abc int
+}
+
+func(a stu) hanshu() int{
+	return a.abc * a.abc
+}
+
+6.
+
+Go 语言数组声明需要指定元素类型及元素个数，语法格式如下：
+
+var variable_name [SIZE] variable_type
+
+以上为一维数组的定义方式。数组长度必须是整数且大于 0。例如以下定义了数组 balance 长度为 10 类型为 float32：
+
+var balance [10] float32
+var balance = []float32{1000.0, 2.0, 3.4, 7.0, 50.0}
+balance[4] = 50.0
+
+7.指针
+
+Go 语言中指针是很容易学习的???
+
+数组 指针好像跟c差不多
+
+定义稍有区别 作为形参的时候也略有区别 （语法不同）
+
+var var_name *var-type
+
+8.用 %x 输出指针 （c语言是%p？）
+
+9.指针数组跟c类似
+
+10.q：golang有结构体数组和数组指针吗？json
+
+11.slice channel .....map json？
+  
