@@ -1,0 +1,124 @@
+day4
+
+1.slice %v
+
+2.map :以小见大 ，集合 ， 不错的方法
+
+	/* 声明变量，默认 map 是 nil */
+	var map_variable map[key_data_type]value_data_type
+
+	/* 使用 make 函数 */
+	map_variable = make(map[key_data_type]value_data_type)
+
+	两行都要才行
+
+3.range ：seems like a easy way to print datas /////// or 有种枚举的感觉.
+		
+	  在一个范围里 枚举 输出？？
+
+	  方便打印
+
+4.递归 迭代
+
+5.一个令人费解的错误 好久都没弄懂
+
+package main
+
+import "fmt"
+
+func main() {
+    
+    j:=0
+    for j=0;j<=10;j++{
+        fmt.Println(function(j))
+    }
+}
+
+func function(a int) int{
+        if (a<2){
+            return a
+        }
+        else{return function(a-1)+function(a-2)}
+                	}
+
+
+
+会报错：unexcepted else ，excepted{
+
+但是
+
+package main
+
+import "fmt"
+
+func main() {
+    
+    j:=0
+    for j=0;j<=10;j++{
+        fmt.Println(function(j))
+    }
+}
+
+func function(a int) int{
+        if (a<2){
+            return a
+        }
+        return function(a-1)+function(a-2)
+                	}
+
+又不会出错 令人费解
+
+6.
+ 	还有
+	强制类型转换 c：（float）x
+		    go：float（x）
+
+7.接口 interface
+
+	方法：带有接收者（结构体成员或者某指针）的函数
+
+	接口：方法的集合
+
+8.了解fo->web 基础 下载的电子书没有图..........fxxk
+
+
+9.
+package main
+
+    import "fmt"
+
+    type T struct {
+                i, j int
+            }
+    func a(i, j int) T {
+                    k := T { i, j }
+                    return k
+    }
+    func b(a T) {
+        
+        fmt.Println(a)
+    }
+        
+    func main(){
+        var kenan T
+        kenan = a(1,2)
+        b(kenan)
+    }
+           
+
+还是十分绝望 该怎么做啊........
+
+
+
+html网页
+
+还有什么nginx代理
+
+还有什么ajax json..........
+
+基本还是什么都不会...
+
+从网上找了一组视频 什么go-web编程基础‘
+
+不知道有没有用....
+
