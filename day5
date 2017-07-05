@@ -1,0 +1,78 @@
+1. strings.hasPrefix
+   strings.hasSuffix
+	判断开头和结尾
+2.%t bool值
+
+3.strings.Contains baohan
+
+4.strings.Index
+
+5.strings.Index(s,str string) int
+  panduanweizhi
+	shuchuqishiweizhi
+ 
+	strings.IndexRune(s string,r rune)
+            ruguo shi fei ascii ma zifu jiuyong indexrune
+
+		rune nenggou caozuo renyi zifu
+
+6.Replace 用于将字符串 str 中的前 n 个字符串 old 替换为字符串 new，并返回一个新的字符串，如果 n = -1 则替换所有字符串 old 为字符串 new：
+
+strings.Replace(str, old, new, n) string
+
+7.Count 用于计算字符串 str 在字符串 s 中出现的非重叠次数：
+
+strings.Count(s, str string) int
+
+8.Repeat 用于重复 count 次字符串 s 并返回一个新的字符串：
+
+strings.Repeat(s, count int) string
+
+9
+
+ToLower 将字符串中的 Unicode 字符全部转换为相应的小写字符：
+
+strings.ToLower(s) string
+
+ToUpper 将字符串中的 Unicode 字符全部转换为相应的大写字符：
+
+strings.ToUpper(s) string
+
+10.
+strings.TrimSpace(s,"ssss") tichu kaitou he jiewei de zifu chuan
+
+11.
+Join 用于将元素类型为 string 的 slice 使用分割符号来拼接组成一个字符串：
+
+strings.Join(sl []string, sep string) string
+
+12.
+strings.Fields(s) 将会利用 1 个或多个空白符号来作为动态长度的分隔符将字符串分割成若干小块，并返回一个 slice，如果字符串只包含空白符号，则返回一个长度为 0 的 slice。
+
+strings.Split(s, sep) 用于自定义分割符号来对指定字符串进行分割，同样返回 slice。
+
+13.read
+
+函数 strings.NewReader(str) 用于生成一个 Reader 并读取字符串中的内容，然后返回指向该 Reader 的指针，从其它类型读取内容的函数还有：
+
+    Read() 从 []byte 中读取内容。
+    ReadByte() 和 ReadRune() 从字符串中读取下一个 byte 或者 rune。
+
+14.
+	感觉学习的方向有点偏差
+
+15.从网上找了例子 不懂的就baidu/bing 然后改了一下 写了一个登录界面
+	test.html
+	kenan.css
+
+
+16.go-web开发
+
+	开始使用极客社区的教程
+
+	w3c感觉不太够 电子书略坑
+
+
+17.希望今天可以写出第一段代码
+	http啥的
+	
