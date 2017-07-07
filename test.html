@@ -5,14 +5,20 @@
         <title>Login</title>  
         <link rel="stylesheet" type="text/css" href="kenan.css"/>  
     </head>  
+
     <body>  
         <div id="匿名社区">  
             <h1>匿名社区</h1>  
-            <form method="post">  
-                <input type="text" required="required" placeholder="用户名" name="u"></input>  
-                <input type="password" required="required" placeholder="密码" name="p"></input>  
+            <form method="POST" action="/login">  
+                <input type="text" required="required" placeholder="用户名" name="uname"></input>  
+                <input type="password" required="required" placeholder="密码" name="pwd"></input>  
                 <button class="but" type="submit" >登录</button>  
                 <button class="and" type="submit" >注册</button> 
+                <div class="checkbox">
+                    <label>
+                        <input type ="checkbox" name=autoLogin> JIZHUWO
+                    </label>
+                </div>
             </form>  
         </div>  
     </body>  

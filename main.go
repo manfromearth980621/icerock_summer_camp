@@ -1,49 +1,52 @@
 package main
 
 import (
-	"fmt"
-	"strings"
-	"io"
-	"log"
-	"net/http"
-	//_ "bingyan/routers"
-	//"github.com/astaxie/beego"
+	"beelog/controllers"
+	"beelog/models"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 )
 
-type data struct()
+/*type data struct()
 	headline string
 	content string
 	like bool
-	
-}
+}*/
 
 func init(){
-	//导入mysq数据库用，不过我现在不会、、
+	models.RegisterDB()
+	//导入sql3数据库用，不过我现在不会、、
 }
 
-func (ex data)like() /*接收者*/{
+/*func (ex data)like() /*接收者*//*{
 	//点赞
-}
+}*/
 
-func (ex data)comment(){
+/*func (ex data)comment(){
 	//评论
-}////////////////////////////////////要用chinnel吗？？
+}////////////////////////////////////要用chinnel吗？？*/
 
 
 
 
-func pushup(this *data)
+//func pushup(this *data)
+
 func main() {
-	http.HandleFunc("/",sayhello)
+	orm.Debug = true
+	orm.RunSyncdb("default",false,true)
+
+	beego.Router("/",&controllers.MainController{})
+	
+	/*http.HandleFunc("/",sayhello)
 
 	err := http.ListenAndServe(":9090",nil)
 	if err !=nil{
 		log.Fatal("htp.ListenAndServe:",err)
-	}
-	//beego.Run()
+	}*/
+	beego.Run()
 }
 
-func sayhello(w http.ResponseWriter , r *http.Request){
+/*func sayhello(w http.ResponseWriter , r *http.Request){
 	io.WriteString(w, "hello world")
 	r.ParseForm()
 	fmt.Println(r.Form)
@@ -55,4 +58,4 @@ func sayhello(w http.ResponseWriter , r *http.Request){
 		fmt.Println("val:",strings.Join(v,""))
 	}
 	fmt.Fprintf(w, "hello world!")
-}
+}*/
