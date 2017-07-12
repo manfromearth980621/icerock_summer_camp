@@ -1,0 +1,48 @@
+{{template "header"}}
+    	<title>注册</title>
+  	</head>
+
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				{{template "navbar" .}}
+			</div>	
+		</div>
+		
+		<div class="container">
+			<h1>注册帐号</h1>
+			<form method="post" action="/signup">
+				<div class="form-group">
+					<label>帐号：</label>
+					<input  type="text" class="form-control" name="account">
+				</div>
+
+				<div class="form-group">
+					<label>密码：</label>
+                    <input  type="text" class="form-control" name="password">
+				</div>
+
+                <div class="form-group">
+					<label>手机号：</label>
+                    <input  type="text" class="form-control" name="phonenumber">
+				</div>
+                
+				<button type="submit" class="btn btn-default" onclick="return checkInput();">注册</button>
+			</form>
+            <script type="text/javascript">
+		      	function checkInput() {
+		      		var account = document.getElementById("account");
+                    var password = document.getElementById("account");
+                    var phonenumber = document.getElementById("phonenumber");
+
+		      		if ((uname.value.length == 0)||(account.value.length == 0)||(phonenumber.value.length == 0)) {
+		      			alert("qingshurushuju");
+		      			return false;
+		      		}
+		      	}
+	      	</script>
+		</div>
+		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	</body>
+</html>

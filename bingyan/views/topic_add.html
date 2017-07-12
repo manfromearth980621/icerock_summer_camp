@@ -1,37 +1,29 @@
-<html>
-    <head>
-        <link rel="shortcut icon" href="/static/img/favicon.png">
-        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+{{template "header"}}
+    	<title>发帖</title>
+  	</head>
 
-    
-         <title>发帖</title>
-    </head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				{{template "navbar" .}}
+			</div>	
+		</div>
+		<div class="container">
+			<h1>发帖</h1>
+			<form method="post" action="/topic">
+				<div class="form-group">
+					<label>帖子标题：</label>
+					<input type="text" class="form-control" name="title">
+				</div>
 
-    <body>
-        <div class = "navbar navbar-default navbar-fixed-top">
-            <div class "container">
-                {{template "navbar" .}}
-            </div>
-        </div>
-
-        <div class = "container">
-            <h1>发帖</h1>
-            <form method = "post" action = "/topic">
-                <div class = "form-group">
-                <label>biaoti: </label>
-                <input type ="text" name="title" class="form-control">
-                </div>
-
-                <div class = "form-group">
-                    <label> neirong: </label>
-                    <textarea name = "content" cols="30" rows ="10" ></textarea>
-                </div>
-                <button type = "submit" class="btn btn-default"></button>
-            </form>
-        </div>
-
-        <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    </body>
-
+				<div class="form-group">
+					<label>帖子内容：</label>
+					<textarea name="content" cols="30" rows="10" class="form-control"></textarea>
+				</div>
+				<button type="submit" class="btn btn-default">发表</button>
+			</form>
+		</div>
+		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	</body>
 </html>

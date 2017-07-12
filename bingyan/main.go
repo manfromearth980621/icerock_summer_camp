@@ -1,67 +1,35 @@
 package main
 
 import (
-	"beelog/controllers"
-	"beelog/models"
+	"bingyan/controllers"
+	"bingyan/models"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
-/*type data struct()
-	headline string
-	content string
-	like bool
-}*/
-
-func init(){
-
+func init() {
+	// 注册数据库
 	models.RegisterDB()
-	
 }
-
-/*func (ex data)like() /*接收者*//*{
-	//点赞
-}*/
-
-/*func (ex data)comment(){
-	//评论
-}////////////////////////////////////要用chinnel吗？？*/
-
-
-
-
-//func pushup(this *data)
 
 func main() {
+
+	beego.BConfig.WebConfig.Session.SessionOn = true//session ok
+
+	
+	// 开启 ORM 调试模式
 	orm.Debug = true
+	// 自动建表
+	orm.RunSyncdb("default", false, true)
 
-	orm.RunSyncdb("default",false,true)
-
-	beego.Router("/",&controllers.MainController{})
-	beego.Router("/topic",&controllers.TopicController{})
-	
-	beego.Router("/login",&controllers.LoginController{})
-	
+	// 注册 beego 路由
+	beego.Router("/", &controllers.HomeController{})
+	beego.Router("/category", &controllers.CategoryController{})
+	beego.Router("/topic", &controllers.TopicController{})
 	beego.AutoRouter(&controllers.TopicController{})
-	/*http.HandleFunc("/",sayhello)
+	beego.Router("/login", &controllers.LoginController{})
+	beego.Router("/signup", &controllers.SignupController{})
 
-	err := http.ListenAndServe(":9090",nil)
-	if err !=nil{
-		log.Fatal("htp.ListenAndServe:",err)
-	}*/
+	// 启动 beego
 	beego.Run()
 }
-
-/*func sayhello(w http.ResponseWriter , r *http.Request){
-	io.WriteString(w, "hello world")
-	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path",r.URL.Path)
-	fmt.Println("scheme",r.URL.Scheme)
-	fmt.Println(r.Form["uel_long"])
-	for k, v := range r.Form{
-		fmt.Println("keys:",k)
-		fmt.Println("val:",strings.Join(v,""))
-	}
-	fmt.Fprintf(w, "hello world!")
-}*/

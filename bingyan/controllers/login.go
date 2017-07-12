@@ -1,15 +1,12 @@
-package login
-	import (
+package controllers
+
+import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	//"fmt"
-	)
-type Logincontrol struct{
-	beego.Controller
-}
+)
 
-func(this *Logincontrol) Get(){
-	this.TplNames = "login.html"
+type LoginController struct {
+	beego.Controller
 }
 
 func (this *LoginController) Get() {
@@ -21,43 +18,45 @@ func (this *LoginController) Get() {
 		return
 	}
 
-	this.TplNames = "login.html"
+	this.TplName = "login.html"
 }
 
-func (this *Logincontrol) Post(){
+func (this *LoginController) Post() {
+	// 获取表单信息
 	uname := this.Input().Get("uname")
 	pwd := this.Input().Get("pwd")
-	autoLogin := this.Input().Get("autoLogin" ) == "on"
-	//this.Ctx.WriteString(fmt.Sprint(this.Input()))
-	
-	if beego.AppConfig.String("uname") == uname &&
-		beego.AppConfig.String("pwd") == pwd {
-			maxAge := 0
-			if autoLogin{
-				maxAge =1<<31 -1
-			}
-	
-		this.Ctx.SetCookie("uname",uname, maxAge , "/")
-		this.Ctx.SetCookie("pwd", pwd, maxAge , "/")
+	autoLogin := this.Input().Get("autoLogin") == "on"
+
+	// 验证用户名及密码
+	if uname == beego.AppConfig.String("adminName") &&
+		pwd == beego.AppConfig.String("adminPass") {
+		maxAge := 0
+		if autoLogin {
+			maxAge = 1<<31 - 1
 		}
 
-	this.Redirect("/",301)
-	return
+		this.Ctx.SetCookie("uname", uname, maxAge, "/")
+		this.Ctx.SetCookie("pwd", pwd, maxAge, "/")
+	}
 
-} 
+	this.Redirect("/", 302)
+	return
+}
 
 func checkAccount(ctx *context.Context) bool {
-	ck,err := ctx.Request.Cookie("uname")
-	if err != nil{
+	ck, err := ctx.Request.Cookie("uname")
+	if err != nil {
 		return false
 	}
+
 	uname := ck.Value
-    
-	ck,err := ctx.Request.Cookie("pwd")
-	if err != nil{
+
+	ck, err = ctx.Request.Cookie("pwd")
+	if err != nil {
 		return false
 	}
+
 	pwd := ck.Value
-	return beego.AppConfig.String("uname") == uname &&
-			beego.AppConfig.String("pwd") == pwd
+	return uname == beego.AppConfig.String("adminName") &&
+		pwd == beego.AppConfig.String("adminPass")
 }
