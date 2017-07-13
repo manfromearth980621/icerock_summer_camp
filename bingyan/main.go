@@ -29,7 +29,8 @@ func main() {
 	beego.AutoRouter(&controllers.TopicController{})
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/signup", &controllers.SignupController{})
-
-	// 启动 beego
-	beego.Run()
+	//beego.Router("/index", &controllers.IndexController{})
+	
+	beego.Run()			// 启动 beego
+	
 }

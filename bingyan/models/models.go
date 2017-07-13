@@ -5,7 +5,12 @@ import (
 	"path"
 	"strconv"
 	"time"
+	//"fmt"
+	"errors"
+	//"database/sql"
 
+	//_ "github.com/ziutek/mymysql/godrv"
+	//"github.com/astaxie/beedb"
 	"github.com/Unknwon/com"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
@@ -46,10 +51,10 @@ type Topic struct {
 }
 
 type Account struct {
-	Id				int64
-	Accountname  	string
-	Password		string
-	Phonenumber		string
+	Id				int64 	`form:"-"`
+	Accountname  	string	`form:"accountname"`
+	Password		string	`form:"password"`
+	Phonenumber		string	`form:"phonenumber"`
 }
 
 func RegisterDB() {
@@ -122,6 +127,31 @@ func AddAccount(account,password,phonenumber string) error {
 
 	_, err := o.Insert(acc)
 	return err
+}
+/*func getLink() beedb.Model {
+	db, err := sql.Open("mysql", "root:root@tcp(192.168.1.81:3306)/test_my?charset=utf8")
+	if err != nil {
+		panic(err)
+	}
+	orm := beedb.New(db)
+	return orm
+}*/
+
+/*func SaveAccount(account Account) error {
+	o := orm.NewOrm()
+	fmt.Println(account)
+	err := orm.Save(&account)
+	return err
+}*/
+
+func ValidateAccount(account Account) error {
+	o := orm.NewOrm()
+	var u Account
+	orm.Where("username=? and pwd=?", account.Accountname, account.Password).Find(&u)
+	if u.Accountname == "" {
+		return errors.New("用户名或密码错误！")
+	}
+	return nil
 }
 
 func AddTopic(title, content string) error {
