@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 	//"fmt"
-	"errors"
+	//"errors"
 	//"database/sql"
 
 	//_ "github.com/ziutek/mymysql/godrv"
@@ -57,6 +57,14 @@ type Account struct {
 	Phonenumber		string	`form:"phonenumber"`
 }
 
+type Comment struct{
+	Id  			int64
+	Tid				int64
+	Name			string
+	Content			string		`orm:"size(1000)"`
+	Created			time.Time	`orm:"index"`
+}
+
 func RegisterDB() {
 	// 检查数据库文件
 	if !com.IsExist(_DB_NAME) {
@@ -65,7 +73,7 @@ func RegisterDB() {
 	}
 
 	// 注册模型
-	orm.RegisterModel(new(Category), new(Topic),new(Account))
+	orm.RegisterModel(new(Category), new(Topic), new(Account), new(Comment))
 	// 注册驱动（“sqlite3” 属于默认注册，此处代码可省略）
 	orm.RegisterDriver(_SQLITE3_DRIVER, orm.DRSqlite)
 	// 注册默认数据库
@@ -144,7 +152,7 @@ func AddAccount(account,password,phonenumber string) error {
 	return err
 }*/
 
-func ValidateAccount(account Account) error {
+/*func ValidateAccount(account Account) error {
 	o := orm.NewOrm()
 	var u Account
 	orm.Where("username=? and pwd=?", account.Accountname, account.Password).Find(&u)
@@ -152,7 +160,7 @@ func ValidateAccount(account Account) error {
 		return errors.New("用户名或密码错误！")
 	}
 	return nil
-}
+}*/
 
 func AddTopic(title, content string) error {
 	o := orm.NewOrm()
@@ -230,4 +238,51 @@ func GetAllTopics(isDesc bool) (topics []*Topic, err error) {
 		_, err = qs.All(&topics)
 	}
 	return topics, err
+}
+
+func AddReply(tid, nickname, content string) error{
+	o := orm.NewOrm()
+	tidNum,err := strconv.ParseInt(tid,10,64)
+	if err!= nil {
+		return err
+	}
+	reply := &Comment{
+		Tid:	tidNum,
+		Name:	nickname,
+		Content:	content,
+		Created:	time.Now(),
+	}
+
+	
+	_, err = o.Insert(reply)
+	return err
+}
+
+func GetAllReplies(tid string) (repiles []*Comment ,err error){
+
+	repiles = make([]*Comment,0)
+
+	tidNum, err := strconv.ParseInt(tid,10,64)
+	if err!= nil {
+		return repiles,err
+	}
+	
+
+	o := orm.NewOrm()
+	qs := o.QueryTable("comment")
+	_,err = qs.Filter("tid",tidNum).All(&repiles)
+	return repiles,err
+}
+
+func DeleteReply(rid string) error {
+	ridNum,err := strconv.ParseInt(rid,10,64)
+	if err != nil {
+		return err
+	}
+
+	o := orm.NewOrm()
+
+	reply := &Comment{Id:ridNum}
+	_,err = o.Delete(reply)
+	return err
 }

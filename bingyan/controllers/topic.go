@@ -87,6 +87,8 @@ func (this *TopicController) Modify() {
 func (this *TopicController) View() {
 	this.TplName = "topic_view.html"
 
+
+
 	topic, err := models.GetTopic(this.Ctx.Input.Params()["0"])
 	if err != nil {
 		beego.Error(err)
@@ -94,4 +96,13 @@ func (this *TopicController) View() {
 		return
 	}
 	this.Data["Topic"] = topic
+	 
+	replies, err := models.GetAllReplies(this.Ctx.Input.Params()["0"])
+		if err != nil {
+			beego.Error(err)
+
+			return
+	}
+	this.Data["Replies"] = replies
+	this.Data["IsLogin"] = checkAccount(this.Ctx)
 }

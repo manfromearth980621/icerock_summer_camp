@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"bingyan/models"
-
+	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -28,14 +28,18 @@ func (this *SignupController) Get() {
 
 func (this *SignupController) POST() {
 
-			var account models.Account
+			//var account models.Account
 			inputs := this.Input()
+			//user := models.Account
+			/*tid := this.Input().Get("tid")
+			title := this.Input().Get("title")
+			content := this.Input().Get("content")*/
 
-			user.Accountname = inputs.Get("account")
-			user.Password = inputs.Get("passsword")
-			user.Phonenumber = inputs.Get("phonenumber")
+			Accountname := inputs.Get("account")
+			Password := inputs.Get("passsword")
+			Phonenumber := inputs.Get("phonenumber")
 
-			err := models.SaveUser(user)
+			err := models.AddAccount(Accountname,Password,Phonenumber)
 			if err == nil {
 				this.TplName = "success.tpl"
 			} else {

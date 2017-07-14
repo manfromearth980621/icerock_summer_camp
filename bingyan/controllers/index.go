@@ -12,9 +12,9 @@ type IndexController struct {
 
 func (index *IndexController) Get() {
 	sess := index.StartSession()
-	username := sess.Get("accountname")
+	accountname := sess.Get("accountname")
 	fmt.Println(accountname)
-	if username == nil || username == "" {
+	if accountname == nil || accountname == "" {
 		index.TplName = "index.tpl"
 	} else {
 		index.TplName = "success.tpl"
@@ -23,13 +23,13 @@ func (index *IndexController) Get() {
 }
 
 func (index *IndexController) Post() {
-	sess := index.StartSession()
-	var user models.User
+	//sess := index.StartSession()
+	var user models.Account
 	inputs := index.Input()
 	//fmt.Println(inputs)
 	user.Accountname = inputs.Get("accountname")
 	user.Password = inputs.Get("password")
-	err := models.ValidateAccount(user)
+	/*err := models.ValidateAccount(user)
 	if err == nil {
 		sess.Set("accountname", user.Accountname)
 		fmt.Println("accountname:", sess.Get("accountname"))
@@ -37,5 +37,5 @@ func (index *IndexController) Post() {
 	} else {
 		fmt.Println(err)
 		index.TplName = "error.tpl"
-	}
+	}*/
 }
