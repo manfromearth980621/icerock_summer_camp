@@ -39,7 +39,7 @@ type Topic struct {
 	Id              int64
 	Uid             int64
 	Title           string
-	Content         string `orm:"size(5000)"`
+	Content         string 	  `orm:"size(5000)"`
 	Attachment      string
 	Created         time.Time `orm:"index"`
 	Updated         time.Time `orm:"index"`
@@ -130,12 +130,26 @@ func AddAccount(account,password,phonenumber string) error {
 	acc := &Account{
 		Accountname : account,
 		Password : password,
-		Phonenumber :phonenumber,
+		Phonenumber : phonenumber,
 	}
 
 	_, err := o.Insert(acc)
 	return err
 }
+
+func DeleteAccount(tid string) error {
+	aid, err := strconv.ParseInt(tid, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	o := orm.NewOrm()
+
+	account := &Account{Id: aid}
+	_, err = o.Delete(account)
+	return err
+}
+
 /*func getLink() beedb.Model {
 	db, err := sql.Open("mysql", "root:root@tcp(192.168.1.81:3306)/test_my?charset=utf8")
 	if err != nil {
