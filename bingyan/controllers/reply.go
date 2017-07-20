@@ -8,7 +8,7 @@ import(
 
 type ReplyController struct{
 	beego.Controller
-}
+} 
 
 func (this *ReplyController) Add() {
 	tid := this.Input().Get("tid")

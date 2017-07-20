@@ -5,7 +5,7 @@
 		<li {{if .IsHome}}class="active"{{end}}><a href="/">首页</a></li>
 		<li {{if .IsCategory}}class="active"{{end}}><a href="/category">分类</a></li>
 		<li {{if .IsTopic}}class="active"{{end}}><a href="/topic">帖子</a></li>
-		<li {{if .IsSignup}}class="active"{{end}}><a href="/regist">注册</a></li>
+		<li {{if .IsSignup}}class="active"{{end}}><a href="/signup">注册</a></li>
 	</ul>
 </div>
 

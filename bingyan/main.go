@@ -31,8 +31,8 @@ func main() {
 
 	beego.Router("/login", &controllers.LoginController{})
 	
-	beego.Router("/regist", &controllers.RegistController{})
-	beego.AutoRouter(&controllers.RegistController{})
+	beego.Router("/signup", &controllers.SignupController{})
+	beego.AutoRouter(&controllers.SignupController{})
 
 	beego.Router("/reply", &controllers.ReplyController{})
 	beego.Router("/reply/add", &controllers.ReplyController{},"post:Add")

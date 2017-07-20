@@ -51,10 +51,10 @@ type Topic struct {
 }
 
 type Account struct {
-	Id				int64 	`form:"-"`
-	Accountname  	string	`form:"accountname"`
-	Password		string	`form:"password"`
-	Phonenumber		string	`form:"phonenumber"`
+	Id				int64 	//`form:"-"`
+	Accountname  	string	//`form:"accountname"`
+	Password		string	//`form:"password"`
+	Phonenumber		string	//`form:"phonenumber"`
 }
 
 type Comment struct{
@@ -124,20 +124,23 @@ func GetAllCategories() ([]*Category, error) {
 	return cates, err
 }
 
-func AddAccount(account,password,phonenumber string) error {
+func AddAccount(accountname,password,phonenumber string) error {
+
 	o := orm.NewOrm()
-
 	acc := &Account{
-		Accountname : account,
-		Password : password,
-		Phonenumber : phonenumber,
+		Accountname:   accountname,
+		Password: password,
+		Phonenumber: phonenumber,
 	}
-
+	
 	_, err := o.Insert(acc)
+	/*if err == nil {
+    	fmt.Println(err)
+	}*/
 	return err
 }
 
-func DeleteAccount(tid string) error {
+/*func DeleteAccount(tid string) error {
 	aid, err := strconv.ParseInt(tid, 10, 64)
 	if err != nil {
 		return err
@@ -148,7 +151,7 @@ func DeleteAccount(tid string) error {
 	account := &Account{Id: aid}
 	_, err = o.Delete(account)
 	return err
-}
+}*/
 
 /*func getLink() beedb.Model {
 	db, err := sql.Open("mysql", "root:root@tcp(192.168.1.81:3306)/test_my?charset=utf8")

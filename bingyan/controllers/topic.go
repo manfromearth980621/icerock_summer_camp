@@ -27,7 +27,7 @@ func (this *TopicController) Post() {
 		this.Redirect("/login", 302)
 		return
 	}
-
+                                           
 	// 解析表单
 	tid := this.Input().Get("tid")
 	title := this.Input().Get("title")
