@@ -3,6 +3,8 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	"bingyan/models"
+	"fmt"
 )
 
 type LoginController struct {
@@ -10,6 +12,9 @@ type LoginController struct {
 }
 
 func (this *LoginController) Get() {
+	sess := this.StartSession()
+	uname := sess.Get("uname")
+	fmt.Println(uname)
 	// 判断是否为退出操作
 	if this.Input().Get("exit") == "true" {
 		this.Ctx.SetCookie("uname", "", -1, "/")
@@ -39,10 +44,26 @@ func (this *LoginController) Post() {
 		this.Ctx.SetCookie("pwd", pwd, maxAge, "/")
 	}
 
+	sess := this.StartSession()
+	/*var account models.Account
+	account.accountname = this.Input().Get("uname")
+	account.password = this.Input().Get("pwd")*/
+	
+	err := models.ReadAccount(uname,pwd)
+	if err == nil {
+		sess.Set("username", uname)
+		fmt.Println("username:", sess.Get("username"))
+		this.TplName = "success.tpl"
+	} else {
+		fmt.Println(err)
+		this.TplName = "error.tpl"
+	}
+
 	this.Redirect("/", 302)
 	return
 }
 
+//管理员登录的check
 func checkAccount(ctx *context.Context) bool {
 	ck, err := ctx.Request.Cookie("uname")
 	if err != nil {

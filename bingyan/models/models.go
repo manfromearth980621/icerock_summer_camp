@@ -140,6 +140,25 @@ func AddAccount(accountname,password,phonenumber string) error {
 	return err
 }
 
+func ReadAccount(accountname,password string) error {
+
+	o := orm.NewOrm()
+	acc := &Account{
+		Accountname: accountname,
+		Password: password,
+	}
+	err := o.Read(acc)
+
+	if err == orm.ErrNoRows {
+		return err
+	} else if err == orm.ErrMissPK {
+		return err
+	} else {
+		return err
+	}
+}
+
+
 /*func DeleteAccount(tid string) error {
 	aid, err := strconv.ParseInt(tid, 10, 64)
 	if err != nil {
