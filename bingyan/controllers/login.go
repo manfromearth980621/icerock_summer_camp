@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/context"
 	"bingyan/models"
 	"fmt"
+	//"github.com/astaxie/beego/session"  
 )
 
 type LoginController struct {

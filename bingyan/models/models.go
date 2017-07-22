@@ -48,6 +48,7 @@ type Topic struct {
 	ReplyTime       time.Time `orm:"index"`
 	ReplyCount      int64
 	ReplyLastUserId int64
+	Likes			int64
 }
 
 type Account struct {
@@ -206,9 +207,27 @@ func AddTopic(title, content string) error {
 		Content: content,
 		Created: time.Now(),
 		Updated: time.Now(),
+		Likes:	 0,
 	}
 	_, err := o.Insert(topic)
 	return err
+}
+
+func LikeTopic(tid string) error {
+	
+	tidNum, err := strconv.ParseInt(tid, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	o := orm.NewOrm()
+	topic := &Topic{Id: tidNum}
+	if o.Read(topic) == nil {
+		topic.Likes++
+		o.Update(topic)
+	}
+	return nil
+	
 }
 
 func GetTopic(tid string) (*Topic, error) {

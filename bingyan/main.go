@@ -15,7 +15,7 @@ func init() {
 func main() {
 
 	beego.BConfig.WebConfig.Session.SessionOn = true//session ok
-
+	//beego.SessionOn = true
 	
 	// 开启 ORM 调试模式
 	orm.Debug = true
