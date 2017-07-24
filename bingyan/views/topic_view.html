@@ -10,9 +10,17 @@
 		</div>
 		
 		<div class="container">
+			{{$lables := .Lables}}
 			{{with .Topic}}
-			<h1>{{.Title}}</h1>
+			<h1>{{.Title}} <small>{{.Category}}</small></h1>
+			<h5>
+				{{range $lables}}
+				<a href="/?lable={{.}}">{{.}}</a>
+				{{end}}
+			</h5>
+			
 			{{.Content}}
+			<h5>附件：<a href="/attachment/{{.Attachment}}">{{.Attachment}}</a></h5>
 			{{end}}
 		</div>
 
@@ -46,9 +54,22 @@
 						</div>
 						</div>
 				</div>
-					<button class="btn btn-default">提交</button>
+					<button class="btn btn-default" onclick="return checkon()">提交</button>
 				</form>
-
+					 <!--
+            <script type="text/javascript">
+		    function checkon() {
+            var userNameCheck = $("#userNameCheck").attr('checked');
+            var dateCheck = $("#dateCheck").attr('checked');
+            var descCheck = $("#descCheck").attr('checked');
+            if (!userNameCheck && !dateCheck && !descCheck) {
+                alert("至少要勾选一个");
+                return false;
+            }
+            return true;
+        }
+              </script>
+                      -->
 		</div>
 
 	

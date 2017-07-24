@@ -1,6 +1,10 @@
 package controllers
 
 import (
+	"path"
+	"strings"
+
+
 	"bingyan/models"
 
 	"github.com/astaxie/beego"
@@ -15,7 +19,7 @@ func (this *TopicController) Get() {
 	this.TplName = "topic.html"
 	this.Data["IsLogin"] = checkAccount(this.Ctx)
 
-	topics, err := models.GetAllTopics(false)
+	topics, err := models.GetAllTopics("","",false)
 	if err != nil {
 		beego.Error(err)
 	}
@@ -32,12 +36,32 @@ func (this *TopicController) Post() {
 	tid := this.Input().Get("tid")
 	title := this.Input().Get("title")
 	content := this.Input().Get("content")
+	category := this.Input().Get("category")
+	lable := this.Input().Get("lable")
 
-	var err error
+	// 获取附件
+	_, fh, err := this.GetFile("attachment")
+	if err != nil {
+		beego.Error(err)
+	}
+
+	var attachment string
+	if fh != nil {
+		// 保存附件
+		attachment = fh.Filename
+		beego.Info(attachment)
+		err = this.SaveToFile("attachment", path.Join("attachment", attachment))
+		if err != nil {
+			beego.Error(err)
+		}
+	}
+
+	var err1 error
 	if len(tid) == 0 {
-		err = models.AddTopic(title, content)
+		err = models.AddTopic(title, category, lable, content, attachment)
 	} else {
-		err = models.ModifyTopic(tid, title, content)
+		err = models.ModifyTopic(tid, title, category, lable, content, attachment)
+		err1 =models.LikeTopic(tid)
 	}
 
 	if err != nil {
@@ -54,6 +78,7 @@ func (this *TopicController) Add() {
 	}
 
 	this.TplName = "topic_add.html"
+	this.Data["IsLogin"] = true
 }
 
 func (this *TopicController) Delete() {
@@ -71,6 +96,10 @@ func (this *TopicController) Delete() {
 }
 
 func (this *TopicController) Modify() {
+	if !checkAccount(this.Ctx) {
+		this.Redirect("/login", 302)
+		return
+	}
 	this.TplName = "topic_modify.html"
 
 	tid := this.Input().Get("tid")
@@ -82,14 +111,32 @@ func (this *TopicController) Modify() {
 	}
 	this.Data["Topic"] = topic
 	this.Data["Tid"] = tid
+	this.Data["IsLogin"] = true
 }
 
 func (this *TopicController) View() {
 	this.TplName = "topic_view.html"
 
+	reqUrl := this.Ctx.Request.RequestURI
+	i := strings.LastIndex(reqUrl, "/")
+	tid := reqUrl[i+1:]
 
+	topic, err := models.GetTopic(tid)
+	if err != nil {
+		beego.Error(err)
+		this.Redirect("/", 302)
+		return
+	}
+	this.Data["Topic"] = topic
+	this.Data["Lables"] = strings.Split(topic.Lables, " ")
 
-	topic, err := models.GetTopic(this.Ctx.Input.Params()["0"])
+	replies, err := models.GetAllReplies(tid)
+	if err != nil {
+		beego.Error(err)
+		return
+	}
+
+	/*topic, err := models.GetTopic(this.Ctx.Input.Params()["0"])
 	if err != nil {
 		beego.Error(err)
 		this.Redirect("/", 302)
@@ -102,7 +149,7 @@ func (this *TopicController) View() {
 			beego.Error(err)
 
 			return
-	}
+	}*/
 	this.Data["Replies"] = replies
 	this.Data["IsLogin"] = checkAccount(this.Ctx)
 }
